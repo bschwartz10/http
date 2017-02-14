@@ -1,3 +1,4 @@
+
 require 'socket'
 # "Best" case scenario
 # server = MyServer.new(9292)
