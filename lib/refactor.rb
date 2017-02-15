@@ -1,5 +1,6 @@
 require 'socket'
 require_relative 'path_destination'
+require_relative 'path_generator'
 class Server
 attr_reader :tcp_server, :counter, :number_of_requests
 
@@ -7,21 +8,12 @@ attr_reader :tcp_server, :counter, :number_of_requests
   def initialize(port_number)
     @tcp_server = TCPServer.new(9292)
     @number_of_requests = 0
-    @destination = PathDestination.new
-    @path = ""
+    @generator = PathGenerator.new
+
+    # require "pry"; binding.pry
   end
 
-  def diagnostics(request_lines)
-    verb = request_lines[0].split[0]
-    @path = request_lines[0].split[1]
-    protocol = request_lines[0].split[2]
-    host = request_lines[1].split(":")[1].lstrip
-    port = request_lines[1].split(":")[2]
-    origin = host
-    accept = request_lines[-3].split(":")[1].lstrip
 
-    "<pre>\nVerb: #{verb}\nPath: #{@path}\nProtocol: #{protocol}\nHost: #{host}\nPort: #{port}\nOrigin: #{origin}\nAccept: #{accept}\n</pre>"
-  end
 
   def run_request_response
     until @server_should_exit
@@ -32,13 +24,13 @@ attr_reader :tcp_server, :counter, :number_of_requests
       while line = client.gets and !line.chomp.empty?
         request_lines << line.chomp
       end
-      diagnostics(request_lines)
+
 
       puts "Got this request:"
       puts request_lines.inspect
 
-      @number_of_requests += 1
-      response = path_generator(request_lines)
+      # @number_of_requests += 1
+      response = @generator.path_generator(request_lines)
 
 
       puts "Sending response."
@@ -55,28 +47,13 @@ attr_reader :tcp_server, :counter, :number_of_requests
       puts ["Wrote this response:", headers, output].join("\n")
 
       puts "\nResponse complete, exiting."
+      break if PathDestination.new.close == true
+      puts PathDestination.new.close
     end
-
     client.close
   end
 
-  def path_generator(request_lines)
-    case @path
-      when '/'
-        response = diagnostics(request_lines)
-      when '/hello'
-        response = @destination.hello
-      when '/datetime'
-        response = @destination.date_time
-      when '/shutdown'
-        response = shut_down
-    end
-  end
 
-  def shut_down
-    @server_should_exit = true
-    "<h1>Total Requests: #{@number_of_requests}</h1>"
-  end
 
 end
 
