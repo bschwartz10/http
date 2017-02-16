@@ -32,16 +32,7 @@ class PathDestinationTest < Minitest::Test
   def test_shut_down_is_running_correctly
     destination = PathDestination.new
 
-
     assert_equal "<h1>Total Requests: 1</h1>", destination.shut_down(1)
   end
-
-
-
-
-
-
-
-
 
 end
