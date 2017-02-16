@@ -4,7 +4,6 @@ require_relative 'path_generator'
 class Server
 attr_reader :tcp_server, :counter, :number_of_requests
 
-
   def initialize(port_number)
     @tcp_server = TCPServer.new(9292)
     @number_of_requests = 0

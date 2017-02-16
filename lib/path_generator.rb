@@ -37,8 +37,9 @@ attr_reader :destination
         response = @destination.word_search(input_word) + @diagnostics.response(request_lines)
       when '/shutdown'
         response = @destination.shut_down(@number_of_requests) + @diagnostics.response(request_lines)
+      else
+        response = "404 Error"
     end
   end
-
 
 end
