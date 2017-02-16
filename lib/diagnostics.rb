@@ -1,4 +1,3 @@
-
 class Diagnostics
 
   def response(request_lines)
@@ -12,4 +11,5 @@ class Diagnostics
 
     "<pre>\nVerb: #{verb}\nPath: #{path}\nProtocol: #{protocol}\nHost: #{host}\nPort: #{port}\nOrigin: #{origin}\nAccept: #{accept}\n</pre>"
   end
+
 end

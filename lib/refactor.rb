@@ -9,14 +9,11 @@ attr_reader :tcp_server, :counter, :number_of_requests
     @tcp_server = TCPServer.new(9292)
     @number_of_requests = 0
     @generator = PathGenerator.new
-
-    # require "pry"; binding.pry
+    # @destination = PathDestination.new
   end
 
-
-
   def run_request_response
-    until @server_should_exit
+    until @generator.destination.close
       puts "Ready for a request"
       client = @tcp_server.accept
 
@@ -24,14 +21,10 @@ attr_reader :tcp_server, :counter, :number_of_requests
       while line = client.gets and !line.chomp.empty?
         request_lines << line.chomp
       end
-
-
       puts "Got this request:"
       puts request_lines.inspect
 
-      # @number_of_requests += 1
       response = @generator.path_generator(request_lines)
-
 
       puts "Sending response."
 
@@ -47,14 +40,9 @@ attr_reader :tcp_server, :counter, :number_of_requests
       puts ["Wrote this response:", headers, output].join("\n")
 
       puts "\nResponse complete, exiting."
-      break if PathDestination.new.close == true
-      puts PathDestination.new.close
     end
     client.close
   end
-
-
-
 end
 
 new_server = Server.new(9292)
