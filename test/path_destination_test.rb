@@ -25,8 +25,8 @@ class PathDestinationTest < Minitest::Test
   def test_word_search_is_running_correctly
     destination = PathDestination.new
 
-    assert_equal "water is a known word", destination.word_search("water")
-    assert_equal "dsds is not a known word", destination.word_search("dsds")
+    assert_equal "<h1>water is a known word</h1>", destination.word_search("water")
+    assert_equal "</h1>dsds is not a known word</h1>", destination.word_search("dsds")
   end
 
   def test_shut_down_is_running_correctly

@@ -19,9 +19,9 @@ end
 
   def word_search(input_word)
     if @dictionary.include?(input_word)
-      "#{input_word} is a known word"
+      "<h1>#{input_word} is a known word</h1>"
     else
-      "#{input_word} is not a known word"
+      "<h1>#{input_word} is not a known word</h1>"
     end
   end
 
