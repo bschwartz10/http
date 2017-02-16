@@ -1,10 +1,11 @@
 class PathDestination
-attr_reader :close
+attr_reader :close, :server_should_exit
 
 def initialize
   @server_should_exit = false
   @counter = 0
   @close = false
+  @dictionary = File.read("/usr/share/dict/words").split("\n")
 end
 
   def hello
@@ -14,6 +15,14 @@ end
 
   def date_time
     "<h1>#{Time.now.strftime('%H:%M%p on %A, %B %e, %Y')}</h1>"
+  end
+
+  def word_search(input_word)
+    if @dictionary.include?(input_word)
+      "#{input_word} is a known word"
+    else
+      "#{input_word} is not a known word"
+    end
   end
 
   def shut_down(number_of_requests)
