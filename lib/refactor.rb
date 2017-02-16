@@ -9,7 +9,6 @@ attr_reader :tcp_server, :counter, :number_of_requests
     @tcp_server = TCPServer.new(9292)
     @number_of_requests = 0
     @generator = PathGenerator.new
-    # @destination = PathDestination.new
   end
 
   def run_request_response

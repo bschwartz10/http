@@ -26,11 +26,16 @@ class ServerTest < Minitest::Test
   end
 
   def test_it_can_follow_path_to_datetime
+    skip
     response = Faraday.get('http://localhost:9292/datetime')
     assert response.body.include?("2017")
     assert response.body.include?("February")
   end
 
+  def test_it_runs_word_seach_when_passed_path_and_params
 
+    response = Faraday.get('http://localhost:9292/word_search?word=water')
+    assert response.body.include?("water is a known word")
+  end
 
 end

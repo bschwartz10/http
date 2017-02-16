@@ -20,7 +20,6 @@ attr_reader :destination
 
   def path_generator(request_lines)
     path = request_lines[0].split[1]
-
     input_word = path.split('=')[1]
     path = path_checker(path)
     case path
